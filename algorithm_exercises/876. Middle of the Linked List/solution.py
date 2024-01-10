@@ -1,4 +1,4 @@
-def middleNode(head):
+def middleNode(head: list):
     curr = curr2 = head
     while curr2 and curr2.next:
         curr = curr.next
