@@ -1,4 +1,3 @@
-// const RemoveElement = require('solution.js');
 import { removeElement } from "./solution.js";
 
 describe('RemoveElement', () => {
