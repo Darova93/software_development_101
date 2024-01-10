@@ -13,7 +13,7 @@ describe('RemoveElement', () => {
 
 describe('RemoveElement', () => {
 
-    it('should remove the numbers 3 from array element and return 2', () => {
+    it('should remove the numbers 2 from array element and return 5', () => {
         let arrayToTest = [0, 1, 2, 2, 3, 0, 4, 2]
         let valueToTest = 2
         expect(removeElement(arrayToTest, valueToTest)).toEqual(5)
