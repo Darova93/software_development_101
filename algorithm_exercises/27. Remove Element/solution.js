@@ -4,7 +4,7 @@
  * @return {number}
  */
 var removeElement = function (nums, val) {
-    let length = nums.length
+    const length = nums.length
     let i = 0
     while (i < length) {
         if (nums[i] === val) {
