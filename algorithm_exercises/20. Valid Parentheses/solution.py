@@ -1,16 +1,16 @@
 def isValid(s: str) -> bool:
     OPENBRACKETS_STACK = []
-    for i in s:
-        if i in ['(','[','{']:
-            OPENBRACKETS_STACK.append(i)
+    for char in s:
+        if char in ['(','[','{']:
+            OPENBRACKETS_STACK.append(char)
         elif not OPENBRACKETS_STACK:
             return False
-        elif i==')' and OPENBRACKETS_STACK[-1]=='(':
+        elif char==')' and OPENBRACKETS_STACK[-1]=='(':
             OPENBRACKETS_STACK.pop()
-        elif i==']' and OPENBRACKETS_STACK[-1]=='[':
+        elif char==']' and OPENBRACKETS_STACK[-1]=='[':
             OPENBRACKETS_STACK.pop()
-        elif i=='}' and OPENBRACKETS_STACK[-1]=='{':
+        elif char=='}' and OPENBRACKETS_STACK[-1]=='{':
             OPENBRACKETS_STACK.pop()
         else:
             return False
-    return not OPENBRACKETS_STACK
+    return len(OPENBRACKETS_STACK)==0
