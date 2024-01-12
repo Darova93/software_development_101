@@ -1,4 +1,5 @@
 *.vs
+*.vscode
 algorithm_exercises/bin
 algorithm_exercises/obj
 algorithm_exercises_test_csharp/.vs
