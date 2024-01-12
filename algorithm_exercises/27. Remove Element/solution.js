@@ -1,9 +1,4 @@
-/**
- * @param {number[]} nums
- * @param {number} val
- * @return {number}
- */
-var removeElement = function (nums, val) {
+export const removeElement = (nums, val) => {
     const length = nums.length
     let i = 0
     while (i < length) {
