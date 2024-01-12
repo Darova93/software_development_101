@@ -5,4 +5,3 @@ import pytest
 def test_removeDuplicates(nums, expectedNums):
     result = removeDuplicates(nums)
     assert result == expectedNums
-    
