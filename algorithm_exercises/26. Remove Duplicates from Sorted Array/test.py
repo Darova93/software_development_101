@@ -1,4 +1,4 @@
-from solution import removeDuplicates
+from .solution import removeDuplicates
 
 def test_removeDuplicates():
     assert removeDuplicates([1,1,2]) == 2
