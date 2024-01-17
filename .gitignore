@@ -13,3 +13,10 @@ algorithm_exercises/obj
 algorithm_exercises_test_csharp/.vs
 algorithm_exercises_test_csharp/bin
 algorithm_exercises_test_csharp/obj
+
+# JS
+node_modules
+package.json
+package-lock.json
+lib
+spec

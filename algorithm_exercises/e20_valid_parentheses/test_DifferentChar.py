@@ -1,5 +1,6 @@
 import pytest
-from solution import isValid
+from .solution import isValid
+
 @pytest.mark.parametrize("test_input,expected", [('()[&]{}', False),
                                                  ('()[]{}(', False),
                                                  ('()[]{}', True)])
