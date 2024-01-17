@@ -1,6 +1,7 @@
 def wordle(word: str, wordOfTheDay: str):
     word.lower()
     missplaced = []
+    
     fails = []
     correct = []
     if word == wordOfTheDay:
