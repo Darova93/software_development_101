@@ -2,7 +2,14 @@ def wordle(word: str, wordOfTheDay: str):
     word.lower()
     missplaced = []
     correct = []
-    wordDict = {"M":1, "A":2, "R":1, "I":1}
+    #wordDict = {"M":1, "A":2, "R":1, "I":1}
+    wordDict = {}
+    for letter in wordOfTheDay:
+        if letter in wordDict:
+            wordDict[letter] += 1
+        else:
+            wordDict[letter] = 1
+        
 
     fails = []
     if word == wordOfTheDay:
@@ -21,4 +28,4 @@ def wordle(word: str, wordOfTheDay: str):
         
     return correct
 
-print(wordle("MARIA", "caras"))
+    print(wordle("MAAIA", "caras"))
