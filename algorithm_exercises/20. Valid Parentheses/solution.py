@@ -7,7 +7,7 @@ def isValid(s: str) -> bool:
         elif len(openBracketsStack)==0:
             return False
         elif char == bracketDict[openBracketsStack[-1]]:
-            openBracketsStack.pop() 
+            openBracketsStack.pop()
         else:
-            return False                   
+            return False
     return len(openBracketsStack)==0
