@@ -1,23 +1,14 @@
 import { removeElement } from "./solution.js";
 
 describe('RemoveElement', () => {
-
-    it('should remove the numbers 3 from array element and return 2', () => {
-        let arrayToTest = [3, 2, 2, 3]
-        let valueToTest = 3
-        expect(removeElement(arrayToTest, valueToTest)).toEqual(2)
-        expect(arrayToTest).toEqual([2, 2])
-    })
-
-})
-
-describe('RemoveElement', () => {
-
-    it('should remove the numbers 2 from array element and return 5', () => {
-        let arrayToTest = [0, 1, 2, 2, 3, 0, 4, 2]
-        let valueToTest = 2
-        expect(removeElement(arrayToTest, valueToTest)).toEqual(5)
-        expect(arrayToTest).toEqual([0, 1, 3, 0, 4])
-    })
-
+    let testData = [
+        { input: [[3, 2, 2, 3], 3], output: [[2, 2], 2] },
+        { input: [[0, 1, 2, 2, 3, 0, 4, 2], 2], output: [[0, 1, 3, 0, 4], 5] }
+    ]
+    testData.forEach((testCase) => {
+        it(`should remove the number ${testCase.input[1]} from array ${testCase.input[0]} and return ${testCase.output[1]}`, () => {
+            expect(removeElement(testCase.input[0], testCase.input[1])).toEqual(testCase.output[1])
+            expect(testCase.input[0]).toEqual(testCase.output[0])
+        })
+    });
 })
