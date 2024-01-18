@@ -1,0 +1,16 @@
+.wordle .word {
+    display: flex;
+}
+
+.wordle .word .letter {
+    margin: 0 25px;
+    padding: 20px;
+}
+
+.wordle .word .letter .missing{
+    background-color: yellow;
+}
+
+.wordle .word .letter .correct{
+    background-color: limegreen;
+}
