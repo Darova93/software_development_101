@@ -12,7 +12,7 @@ def wordle(testWord: str, wordOfTheDay: str):
             testLetters[index] = 0
             wordOfTheDay.replace(testWord[index],'',1)
     for index in range(0,len(wordOfTheDay)):
-        if testLetters[index] in remainingLetters:
+        if testLetters[index] in wordOfTheDay:
             missplaced.append(index)
             wordOfTheDay.replace(testWord[index],'',1)
         elif testLetters[index] != 0:
