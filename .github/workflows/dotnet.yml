@@ -20,14 +20,15 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
-    - name: Restore dependencies
+
+    - name: Restore main package dependencies
       working-directory: ./algorithm_exercises
       run: dotnet restore
     - name: Build main package
       working-directory: ./algorithm_exercises
-      run: dotnet build -no-restore
+      run: dotnet build
       
-    - name: Restore dependencies
+    - name: Restore test package dependencies
       working-directory: ./algorithm_exercises_test_csharp
       run: dotnet restore
     - name: Build test package
