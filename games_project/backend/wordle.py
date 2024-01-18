@@ -18,13 +18,13 @@ def wordle(word: str, wordOfTheDay: str):
         correct = [0, 1, 2, 3, 4]
         return missplaced, fails, correct
     else:
-    for index in range(0, len(wordOfTheDay)):
-        if word[index] == wordOfTheDay[index]:
-            correct.append(index)
-        elif word[index] in wordOfTheDay:
-            missplaced.append(index) #AGUAS CON VARIAS LETRAS IGUALES
-        else:
-            fails.append(index)
+        for index in range(0, len(wordOfTheDay)):
+            if word[index] == wordOfTheDay[index]:
+                correct.append(index)
+            elif word[index] in wordOfTheDay:
+                missplaced.append(index) #AGUAS CON VARIAS LETRAS IGUALES
+            else:
+                fails.append(index)
         
     return correct
 
