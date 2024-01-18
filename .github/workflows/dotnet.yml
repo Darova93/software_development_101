@@ -21,10 +21,15 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
+      working-directory: ./algorithm_exercises
       run: dotnet restore
     - name: Build main package
       working-directory: ./algorithm_exercises
       run: dotnet build -no-restore
+      
+    - name: Restore dependencies
+      working-directory: ./algorithm_exercises_test_csharp
+      run: dotnet restore
     - name: Build test package
       working-directory: ./algorithm_exercises_test_csharp
       run: dotnet build --no-restore
