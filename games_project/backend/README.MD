@@ -14,6 +14,10 @@ First check that you have the virtual environment active
 ```bash
 source .venv/bin/activate
 ```
+## Windows
+```bash
+source .venv/Scripts/activate
+```
 
 Then run
 ```bash
