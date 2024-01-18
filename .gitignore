@@ -16,7 +16,5 @@ algorithm_exercises_test_csharp/obj
 
 # JS
 node_modules
-package.json
-package-lock.json
 lib
 spec
