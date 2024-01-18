@@ -15,7 +15,7 @@ def wordle(testWord: str, wordOfTheDay: str):
     for index in range(0,len(wordOfTheDay)):
         if testLetters[index] in remainingLetters:
             missplaced.append(index)
-            wordOfTheDay.replace(testWord[index],'',1)
+            remainingLetters.replace(testWord[index],'',1)
         elif testLetters[index] != 0:
             wrong.append(index)
     return right, missplaced, wrong
