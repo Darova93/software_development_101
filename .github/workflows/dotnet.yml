@@ -16,7 +16,7 @@ jobs:
    
     defaults:
       run:
-        working-directory: ./algorithm_exercises
+        working-directory: ./algorithm_exercises_test_csharp
     
     steps:
     - uses: actions/checkout@v3
