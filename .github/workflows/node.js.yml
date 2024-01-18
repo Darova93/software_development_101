@@ -14,6 +14,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./algorithm_exercises
+
     strategy:
       matrix:
         node-version: [14.x, 16.x, 18.x]
@@ -27,7 +31,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: 'algorithm_exercises/package-lock.json'
-    - run: cd algorithm_exercises
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
