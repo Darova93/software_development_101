@@ -1,31 +1,20 @@
-def wordle(word: str, wordOfTheDay: str):
-    word.lower()
+def wordle(testWord: str, wordOfTheDay: str):
+    testWord.upper()
+    wordOfTheDay.upper()
+    right = []
     missplaced = []
-    correct = []
-    #wordDict = {"M":1, "A":2, "R":1, "I":1}
-    wordDict = {}
-    for letter in wordOfTheDay:
-        if letter in wordDict:
-            wordDict[letter] += 1
-        else:
-            wordDict[letter] = 1
-        
-
-    fails = []
-    if word == wordOfTheDay:
-        missplaced = [] 
-        fails = []
-        correct = [0, 1, 2, 3, 4]
-        return missplaced, fails, correct
-    else:
-        for index in range(0, len(wordOfTheDay)):
-            if word[index] == wordOfTheDay[index]:
-                correct.append(index)
-            elif word[index] in wordOfTheDay:
-                missplaced.append(index) #AGUAS CON VARIAS LETRAS IGUALES
-            else:
-                fails.append(index)
-        
-    return correct
-
-    print(wordle("MAAIA", "caras"))
+    wrong = []
+    #letterCount = {letter : wordOfTheDay.count(letter) for letter in set(wordOfTheDay)}
+    testLetters = list(testWord)
+    for index in range(0, len(wordOfTheDay)):
+        if testWord[index] == wordOfTheDay[index]:
+            right.append(index)
+            testLetters[index] = 0
+            wordOfTheDay.replace(testWord[index],'',1)
+    for index in range(0,len(wordOfTheDay)):
+        if testLetters[index] in remainingLetters:
+            missplaced.append(index)
+            wordOfTheDay.replace(testWord[index],'',1)
+        elif testLetters[index] != 0:
+            wrong.append(index)
+    return right, missplaced, wrong
