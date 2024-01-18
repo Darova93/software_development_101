@@ -20,6 +20,7 @@ source .venv/Scripts/activate
 ```
 
 Then run
+## Linux
 ```bash
 flask --app main run --debug
 ```

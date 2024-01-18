@@ -1,4 +1,5 @@
 import random
+import string
 
 with open('palabras_rae.txt', 'r', newline="\r\n", encoding="utf-8") as words:
     def read(listWords):
@@ -7,35 +8,62 @@ with open('palabras_rae.txt', 'r', newline="\r\n", encoding="utf-8") as words:
             words_rae.append(word.replace("\r\n", ""))
         return words_rae
     dictionary = read(words)
-    wordOfDay = (random.choice(dictionary)).upper()
-
-#Palabra random cada que se ejecuta el programa    
-print(wordOfDay)
-correct = []
-missplaced = []
-fails = []
-
-guess = str(input())
-print(guess.upper())
-if guess not in dictionary:
-    print("Se necesita agregar una palabra de 5 letras")
-elif len(guess) > 5 or len(guess) < 5:
-    print("Se necesita una palabra de 5 letras")
-elif guess == wordOfDay:
-    correct = [0,1,2,3,4]
-    missplaced = []
-    fails = []
-else:
-    print(f'La palabra del dia es: {wordOfDay}')
-    print(f'La palabra guess es: {guess.upper()}')
-    round = 6
-    for index in range(5):
-        if guess[index] == wordOfDay[index]:
-            correct.append(index)
-        elif guess[index] != wordOfDay[index]  and guess[index] in wordOfDay:
-            missplaced.append(index)
+    acentos = ["á", "é", "í", "ó", "ú"]
+    randomWord = random.choice(dictionary)
+    index = 0
+    while True:
+        if index == len(randomWord):
+            wordOfDay = randomWord
+            break
+        elif acentos[index] not in randomWord:
+            index += 1
         else:
-            fails.append(index)
+            randomWord = random.choice(dictionary)
+
+def playerGuess(word):
+    if len(word) > 5 or len(word) <= 4:
+        print("La palabra debe contener 5 letras")
+        return playerGuess(str(input()))
+    else:
+        for letter in word:
+            if letter not in string.ascii_lowercase:
+                print("La palabra solo debe tener letras: ")
+                playerGuess(str(input()))
+    return word
+
+def wordle(guess, wordOfDay):
+    rounds = 1
+    while True:
+        correct = []
+        missplaced = []
+        fails = []
+        if guess not in dictionary:
+            print("Se necesita agregar otra palabra de 5 letras que se encuentre en el diccionario")
+            guess = playerGuess(str(input()))
+        if guess == wordOfDay:
+            correct = [0,1,2,3,4]
+            missplaced = []
+            fails = []
+            return correct, missplaced, fails
+        for index in range(len(wordOfDay)):
+            if guess[index] == wordOfDay[index]:
+                correct.append(index)
+            elif guess[index] != wordOfDay[index] and guess[index] in wordOfDay:
+                missplaced.append(index)
+            else:
+                fails.append(index)
+        print(f'Ronda {rounds} terminada.\nPosicion letras correctas:{correct}.\nPosicion letras mal ubicadas: {missplaced}.\nPosicion letras incorrectas: {fails}.')
+        rounds += 1
+        if rounds > 6:
+            return correct, missplaced, fails
+        elif rounds == 6:
+            print("Ultima ronda")
+        guess = playerGuess(str(input()))
+
+print(f'La palabra del dia es: {wordOfDay}')
+guess = playerGuess(str(input()))
+print(f'La palabra del usuario es: {guess}')
+correct, missplaced, fails = wordle(guess, wordOfDay)
 
 print(f'Posicion de las letras correctas: {correct}')
 print(f'Posicion de las letras incorrectas: {missplaced}')
