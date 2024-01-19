@@ -62,6 +62,16 @@ const Wordle = () => {
         return payload
     }
 
+    const createPayload = () => {
+        let payload: {word: string}[] = [];
+        response.forEach(element => {
+            payload.push({word: element.word})
+        });
+        payload.push({word: currentWord})
+        
+        return payload
+    }
+
     const isLetter = (char:string) =>{
         return char.length === 1 && char.match(/[a-zñ]/i) != null
     }
