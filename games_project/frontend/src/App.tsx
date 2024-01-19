@@ -1,5 +1,4 @@
 import './App.css';
-import Example from './components/example';
 import Wordle from './games/wordle/wordle';
 import './styles/global.css';
 
