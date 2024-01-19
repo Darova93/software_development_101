@@ -1,30 +1,31 @@
-def wordle(testingWord: str, wordOfTheDay: str):
-    testingWord.upper()
-    wordOfTheDay.upper()
+class wordle:
+
     right = []
     missplaced = []
     wrong = []
     letterCount = {letter : wordOfTheDay.count(letter) for letter in set(wordOfTheDay)}
-    testLetters = list(testingWord)
-    remainingLetters = wordOfTheDay
-    for index in range(0, len(wordOfTheDay)):
-        if testingWord[index] == wordOfTheDay[index]:
-            right.append(index)
-            testLetters[index] = 0
-            remainingLetters.replace(testingWord[index],'',1)
-            letterCount[testingWord[index]] -= 1
-            
-    for index in range(0,len(wordOfTheDay)):
-        if testLetters[index] in remainingLetters:
-            missplaced.append(index)
-            remainingLetters.replace(testingWord[index],'',1)
-        elif testLetters[index] != 0:
-            wrong.append(index)
 
-        if letterCount[testingWord[index]] > 0 and testingWord[index] in wordOfTheDay:
-            missplaced.append(index)
-        else:
-            wrong.append(index)
+    def __init__(self, guess: str, wordOfTheDay: str):
+        self.guess = guess.upper()
+        self.wordOfTheDay = wordOfTheDay.upper()
+    
+    def _getRightPositions(guess, wordOfTheDay):
+        for index in range(0, len(wordOfTheDay)):
+            if guess[index] == wordOfTheDay[index]:
+                right.append(index)
+                letterCount[guess[index]] -= 1
+        return right
+    
+    def _getMissplacedAndWrongPositions(guess, wordOfTheDay):
+        for index in range(0,len(wordOfTheDay)):
+            if guess[index] != wordOfTheDay[index]:
+                if  guess[index] in wordOfTheDay and letterCount[guess[index]] > 0:
+                    missplaced.append(index)
+                    letterCount[guess[index]] -= 1
+                else:
+                    wrong.append(index)
+        return missplaced, wrong
+    
+    return (_getRightPositions(guess,wordOfTheDay),_getMissplacedAndWrongPositions(guess,wordOfTheDay))
+    print(wordle('atara','maria'))
 
-
-    return right, missplaced, wrong
