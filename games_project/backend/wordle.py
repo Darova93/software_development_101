@@ -1,32 +1,35 @@
-class Wordle:
-    wordOfTheDay = ''
-    guess = ''
-    correctLetterIndices = []
-    missplacedLetterIndices = []
-    wrongLetterIndices = []
-    def __init__(self, guess: str, wordOfTheDay: str):
+class WordleAttempt:
+ #   answer = ''
+ #   guess = ''
+ #   correctLetterIndices = []
+ #   missplacedLetterIndices = []
+ #   wrongLetterIndices = []
+    def __init__(self, guess: str, answer: str):
         self.guess = guess.upper()
-        self.wordOfTheDay = wordOfTheDay.upper()
-        self.wordOfTheDayLetterCount = {letter : self.wordOfTheDay.count(letter) for letter in set(self.wordOfTheDay)}
-    def __getCorrectLetterIndices(self):
+        self.answer = answer.upper()
+        self.answerLetterCount = {letter : self.answer.count(letter) for letter in set(self.answer)}
+        self.correctLetterIndices = self.__getCorrectLetterIndices()
+        self.missplacedLetterIndices, self.wrongLetterIndices = self.__getMissplacedAndWrongLetterIndices()
+    
+    def __getCorrectLetterIndices(self) -> list:
         self.correctLetterIndices = []
-        for index in range(0, len(self.wordOfTheDay)):
-            if self.guess[index] == self.wordOfTheDay[index]:
+        for index in range(0, len(self.answer)):
+            if self.guess[index] == self.answer[index]:
                 self.correctLetterIndices.append(index)
-                self.wordOfTheDayLetterCount[self.guess[index]] -= 1
+                self.answerLetterCount[self.guess[index]] -= 1
         return self.correctLetterIndices
-    def __getMissplacedAndWrongLetterIndices(self):
+    def __getMissplacedAndWrongLetterIndices(self) -> tuple[list,list]:
         self.missplacedLetterIndices = []
         self.wrongLetterIndices = []
-        for index in range(0,len(self.wordOfTheDay)):
-            if self.guess[index] != self.wordOfTheDay[index]:
-                if  self.guess[index] in self.wordOfTheDay and self.wordOfTheDayLetterCount[self.guess[index]] > 0:
+        for index in range(0,len(self.answer)):
+            if self.guess[index] != self.answer[index]:
+                if  self.guess[index] in self.answer and self.answerLetterCount[self.guess[index]] > 0:
                     self.missplacedLetterIndices.append(index)
-                    self.wordOfTheDayLetterCount[self.guess[index]] -= 1
+                    self.answerLetterCount[self.guess[index]] -= 1
                 else:
                     self.wrongLetterIndices.append(index)
         return self.missplacedLetterIndices, self.wrongLetterIndices
-    def testPlayersGuess(self):
-        self.__getCorrectLetterIndices()
-        self.__getMissplacedAndWrongLetterIndices()
-        return self.correctLetterIndices, self.missplacedLetterIndices, self.wrongLetterIndices
+ #   def testPlayersGuess(self) -> tuple[list,list,list]:
+ #       self.__getCorrectLetterIndices()
+ #       self.__getMissplacedAndWrongLetterIndices()
+ #       return self.correctLetterIndices, self.missplacedLetterIndices, self.wrongLetterIndices
