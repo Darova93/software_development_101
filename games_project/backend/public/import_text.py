@@ -7,11 +7,11 @@ class WordOfTheDay:
         with open(self.fileName, "r", newline="\r\n", encoding="utf-8") as file:
             wordsRae = list()
             for word in file:
-                wordsRae.append(word.replace("\r\n", ""))
+                wordsRae.append(word.replace("\r\n", "").upper())
         return wordsRae
     
-    def randomWordWithoutAccent(self):
-        accent = ["á", "é", "í", "ó", "ú"]
+    def randomWord(self):
+        accent = ["Á", "É", "Í", "Ó", "Ú"]
         randomWord = choice(self.fileDictionary())
         index = 0
         while True:
@@ -26,5 +26,5 @@ class WordOfTheDay:
         return wordOfDay
 
 #wordOfTheDay = WordOfTheDay('./palabras_rae.txt')
-wordOfTheDay = WordOfTheDay('./test_doc.txt')
-print(wordOfTheDay.randomWordWithoutAccent())
+#wordOfTheDay = WordOfTheDay('./test_doc.txt')
+#print(wordOfTheDay.randomWord())
