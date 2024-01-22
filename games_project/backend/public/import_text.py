@@ -1,4 +1,4 @@
-import random
+from random import choice
 class WordOfTheDay:
     def __init__(self, fileName):
         self.fileName = fileName
@@ -12,7 +12,7 @@ class WordOfTheDay:
     
     def randomWordWithoutAccent(self):
         accent = ["á", "é", "í", "ó", "ú"]
-        randomWord = random.choice(self.fileDictionary())
+        randomWord = choice(self.fileDictionary())
         index = 0
         while True:
             if index == len(randomWord)-1:
@@ -21,7 +21,7 @@ class WordOfTheDay:
             elif accent[index] not in randomWord:
                 index += 1
             else:
-                randomWord = random.choice(self.fileDictionary())
+                randomWord = choice(self.fileDictionary())
                 index = 0
         return wordOfDay
 
