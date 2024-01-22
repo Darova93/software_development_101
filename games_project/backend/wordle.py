@@ -29,7 +29,3 @@ class WordleAttempt:
                 else:
                     self.wrongLetterIndices.append(index)
         return self.missplacedLetterIndices, self.wrongLetterIndices
- #   def testPlayersGuess(self) -> tuple[list,list,list]:
- #       self.__getCorrectLetterIndices()
- #       self.__getMissplacedAndWrongLetterIndices()
- #       return self.correctLetterIndices, self.missplacedLetterIndices, self.wrongLetterIndices
