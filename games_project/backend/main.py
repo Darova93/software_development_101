@@ -9,13 +9,13 @@ answer = "MARIA"
 
 @app.route("/v0.1/api/wordle/checkword", methods=["POST"])
 @cross_origin()
-def hello_world():
+def checkWord():
     jsonData = request.get_json()
     playerGuess = jsonData['word']
-    aComparison = WordleComparison(playerGuess,answer)
+    currentWordleComparison = WordleComparison(playerGuess,answer)
     response = {
-        "correctLetterIndices" : aComparison.correctLetterIndices,
-        "missplacedLetterIndices" : aComparison.missplacedLetterIndices,
-        "wrongLetterIndices" : aComparison.wrongLetterIndices
+        "correctLetterIndices" : currentWordleComparison.correctLetterIndices,
+        "missplacedLetterIndices" : currentWordleComparison.missplacedLetterIndices,
+        "wrongLetterIndices" : currentWordleComparison.wrongLetterIndices
     }
     return jsonify(response)
