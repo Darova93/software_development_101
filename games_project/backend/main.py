@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
-from wordle import WordleAttempt
+from wordle import WordleComparison
 
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -11,8 +11,8 @@ answer = "MARIA"
 @cross_origin()
 def hello_world():
     jsonData = request.get_json()
-    guess = jsonData['word']
-    aComparison = WordleAttempt(guess,answer)
+    playerGuess = jsonData['word']
+    aComparison = WordleComparison(playerGuess,answer)
     response = {
         "correctLetterIndices" : aComparison.correctLetterIndices,
         "missplacedLetterIndices" : aComparison.missplacedLetterIndices,
