@@ -8,15 +8,15 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 dictionary = WordOfTheDay("./public/palabras_rae.txt")
 answer = dictionary.randomWord()
-print(answer)
 
 @app.route("/v0.1/api/wordle/checkword", methods=["POST"])
 @cross_origin()
 def checkWord():
     jsonData = request.get_json()
     playerGuess = jsonData['word']
-    currentWordleComparison = WordleComparison(playerGuess,answer)
+    currentWordleComparison = WordleComparison(playerGuess, answer)
     response = {
+        "Correct word": answer,
         "correctLetterIndices" : currentWordleComparison.correctLetterIndices,
         "missplacedLetterIndices" : currentWordleComparison.missplacedLetterIndices,
         "wrongLetterIndices" : currentWordleComparison.wrongLetterIndices

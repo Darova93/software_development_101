@@ -1,4 +1,5 @@
 from random import choice
+
 class WordOfTheDay:
     def __init__(self, fileName):
         self.fileName = fileName
@@ -24,7 +25,8 @@ class WordOfTheDay:
                 randomWord = choice(self.fileDictionary())
                 index = 0
         return wordOfDay
-
+    
 #wordOfTheDay = WordOfTheDay('./palabras_rae.txt')
 #wordOfTheDay = WordOfTheDay('./test_doc.txt')
+#print(wordOfTheDay.fileDictionary())
 #print(wordOfTheDay.randomWord())
