@@ -1,9 +1,4 @@
 class WordleComparison:
- #   answer = ''
- #   guess = ''
- #   correctLetterIndices = []
- #   missplacedLetterIndices = []
- #   wrongLetterIndices = []
     def __init__(self, playerGuess: str, correctWord: str):
         self.playerGuess = playerGuess.upper()
         self.correctWord = correctWord.upper()

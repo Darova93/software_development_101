@@ -16,9 +16,9 @@ def checkWord():
     playerGuess = jsonData['word']
     currentWordleComparison = WordleComparison(playerGuess, answer)
     response = {
-        "Correct word": answer,
-        "correctLetterIndices" : currentWordleComparison.correctLetterIndices,
-        "missplacedLetterIndices" : currentWordleComparison.missplacedLetterIndices,
-        "wrongLetterIndices" : currentWordleComparison.wrongLetterIndices
+        "word": playerGuess,
+        "correct" : currentWordleComparison.correctLetterIndices,
+        "missplaced" : currentWordleComparison.missplacedLetterIndices,
+        "wrong" : currentWordleComparison.wrongLetterIndices
     }
     return jsonify(response)
