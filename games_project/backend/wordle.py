@@ -1,3 +1,4 @@
+from public.import_text import WordOfTheDay
 class WordleComparison:
     def __init__(self, playerGuess: str, correctWord: str):
         self.playerGuess = playerGuess.upper()
@@ -24,3 +25,20 @@ class WordleComparison:
                 else:
                     self.wrongLetterIndices.append(index)
         return self.missplacedLetterIndices, self.wrongLetterIndices
+
+#def isItPluralWord(playerGuess: str):
+#    if playerGuess[-1] == "s" and playerGuess[-2] == "e":
+#        threeLetterWords = WordOfTheDay("./public/03.txt")
+#        playerGuess.pop()
+#        playerGuess.pop()
+#        if playerGuess in threeLetterWords.fileDictionary()
+#            return True
+#    elif playerGuess[-1] == "s":
+#        fourLetterWords = WordOfTheDay("./public/04.txt")
+#        playerGuess.pop()
+#        if playerGuess in fourLetterWords.fileDictionary()
+#            return True
+#    else:
+#        if playerGuess in fiveLetterWords.fileDictionary()
+
+

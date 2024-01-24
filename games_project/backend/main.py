@@ -6,8 +6,9 @@ from public.import_text import WordOfTheDay
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-dictionary = WordOfTheDay("./public/palabras_rae.txt")
-answer = dictionary.randomWord()
+fiveLetterWords = WordOfTheDay("./public/palabras_rae.txt")
+
+answer = fiveLetterWords.randomWord()
 
 @app.route("/v0.1/api/wordle/checkword", methods=["POST"])
 @cross_origin()
