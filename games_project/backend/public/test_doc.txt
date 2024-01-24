@@ -1,4 +1,0 @@
-hola
-prueba
-número
-uno
