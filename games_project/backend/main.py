@@ -13,12 +13,14 @@ answer = dictionary.randomWord()
 @cross_origin()
 def checkWord():
     jsonData = request.get_json()
-    playerGuess = jsonData['word']
-    currentWordleComparison = WordleComparison(playerGuess, answer)
-    response = {
-        "word": playerGuess,
-        "correct" : currentWordleComparison.correctLetterIndices,
-        "missplaced" : currentWordleComparison.missplacedLetterIndices,
-        "wrong" : currentWordleComparison.wrongLetterIndices
-    }
-    return jsonify(response)
+    playload = []
+    for guess in range(len(jsonData)):
+        playerGuess = jsonData[guess]['word']
+        currentWordleComparison = WordleComparison(playerGuess, answer)
+        playload.append ({
+            "word": playerGuess,
+            "correct" : currentWordleComparison.correctLetterIndices,
+            "missplaced" : currentWordleComparison.missplacedLetterIndices,
+            "wrong" : currentWordleComparison.wrongLetterIndices
+        })
+    return jsonify(playload)

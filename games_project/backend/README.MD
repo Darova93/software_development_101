@@ -26,5 +26,5 @@ flask --app main run --debug
 ```
 ## Windows
 ```bash
-python3 -m flask --app main run --debug
+python3 -m flask --app main run --debug --host=0.0.0.0
 ```
