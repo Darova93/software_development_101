@@ -1,36 +1,32 @@
+*:focus{
+    outline: none;
+}
+
 .wordle{
-    top: 50%;
-    left: 50%;
-    transform: translate(0%, -33%);
-}
 
-.wordle .word {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-gap: 4px;
-    max-width: 25%;
-}
 
-.word{
-    height: 75px;
-}
+    .word{
+        display: flex;
+        max-width: 25%;
+        height: 3.5em;
 
-.wordle .word .letter {
-    margin: 3px 0 3px 0;
-    padding: 20px;
-    border: 1px;
-    border-radius: 5px;
-    min-width: 25px;
+        .letter{
+            margin: .1em;
+            padding: 1em;
+            border-radius: .25em;
+            min-width: 1em;
+        }
+    }
 }
 
 .missing{
-    background-color: yellow;
+    background-color: #caca2b;
 }
 
 .correct{
-    background-color: limegreen;
+    background-color: #2bb32b;
 }
 
 .fail{
-    background-color: rgba(255, 255, 255, .15);
+    background-color: rgba(255, 255, 255, 0.15);
 }
