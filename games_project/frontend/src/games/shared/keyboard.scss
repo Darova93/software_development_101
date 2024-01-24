@@ -1,0 +1,26 @@
+$key-background: white;
+$used-key-background: silver;
+
+.keyboard {
+    display: flex;
+    flex-flow: column;
+
+    &__letter {
+        display: grid;
+        align-items: center;
+        width: 2em;
+        height: 2em;
+        margin: 0.1em;
+        background-color: $key-background;
+        color: black;
+
+        &.keyboard__used-letter {
+            background-color: $used-key-background;
+        }
+    }
+
+    &__line {
+        display: flex;
+        justify-content: center;
+    }
+}
