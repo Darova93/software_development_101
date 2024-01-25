@@ -7,13 +7,10 @@ import "./styles.scss";
 import WordleWord from "./wordleWord";
 
 const _response = getMockResponse();
-const emptyResponse = [
-    {word: "", missplaced: [], fails: [], correct: []}
-]
 
 const Wordle = () => {
     const [currentWord, setCurrentWord] = useState<string>(" ")
-    const [response, setResponse] = useState<WordleResponse[]>(emptyResponse)
+    const [response, setResponse] = useState<WordleResponse[]>()
     
     const handleKeyDown = (char:string) => {
         let word = currentWord
@@ -28,9 +25,11 @@ const Wordle = () => {
 
     const createPayload = () => {
         let payload: {word: string}[] = [];
-        response.forEach(element => {
-            payload.push({word: element.word})
-        });
+        if(response){
+            response.forEach(element => {
+                payload.push({word: element.word})
+            });           
+        }
         payload.push({word: currentWord})
         
         return payload
@@ -90,7 +89,7 @@ const Wordle = () => {
     };
     
     const getCurrentLetters = () => {
-        return response.reduce((usedLetters:Set<string>, value:WordleResponse):Set<string> => {
+        return response?.reduce((usedLetters:Set<string>, value:WordleResponse):Set<string> => {
             [...value.word].forEach(char => {
                 usedLetters.add(char)
             })
@@ -102,12 +101,12 @@ const Wordle = () => {
     <> 
         <div tabIndex={0} className="wordle" onKeyDown={(event) => handleKeyDown(event.key.toString().toUpperCase())}>
             <div className="words-wrapper">
-            {response.map((value, index) =>(
+            {response?.map((value, index) =>(
                 <WordleWord key={`word-${value.word}-${index}`} value = {value} index={index} />
             ))}
             <WordleWord key={`current-word`} value={{word: currentWord, correct: [], missplaced: [], fails: [0, 1, 2, 3, 4]}} index={currentWord.length-1} />
             </div>
-            <Keyboard usedLetters={getCurrentLetters()} keyClickHandler={(key) => handleKeyDown(key)} ></Keyboard>
+            <Keyboard usedLetters={getCurrentLetters() || new Set()} keyClickHandler={(key) => handleKeyDown(key)} ></Keyboard>
         </div>
     </>
     )
