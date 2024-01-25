@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { WordleResponse } from "../../types/wordleTypes";
 import { PATH_WORDLE_API } from "../../utils/constants";
 import Keyboard from "../shared/keyboard";
@@ -7,20 +7,21 @@ import "./styles.scss";
 import WordleWord from "./wordleWord";
 
 const _response = getMockResponse();
+const emptyResponse = [
+    {word: "", missplaced: [], fails: [], correct: []}
+]
 
 const Wordle = () => {
     const [currentWord, setCurrentWord] = useState<string>(" ")
-    const [response, setResponse] = useState(_response)
+    const [response, setResponse] = useState<WordleResponse[]>(emptyResponse)
     
-    const handleKeyDown = (event:any) => {
-        const char = event.key.toString().toUpperCase()
+    const handleKeyDown = (char:string) => {
         let word = currentWord
         if(word.includes(" ")) word = word.slice(0, -1);
         if(char === "ENTER" && word.length === 5) handleEnter()
         if(isLetter(char) && word.length < 5) word += char
         if(char === "BACKSPACE") {
             word = word.slice(0, -1)
-            if(!word) word = " "
         }
         setCurrentWord(word)
     }
@@ -36,7 +37,7 @@ const Wordle = () => {
     }
 
     const isLetter = (char:string) =>{
-        return char.length === 1 && char.match(/[a-z]/i) != null
+        return char.length === 1 && char.match(/[a-zñ]/i) != null
     }
 
     const handleEnter = async () => {
@@ -88,17 +89,25 @@ const Wordle = () => {
         }
     };
     
+    const getCurrentLetters = () => {
+        return response.reduce((usedLetters:Set<string>, value:WordleResponse):Set<string> => {
+            [...value.word].forEach(char => {
+                usedLetters.add(char)
+            })
+            return usedLetters
+        }, new Set<string>())
+    }
+
     return(
     <> 
-        <div tabIndex={0} className="wordle" onKeyDown={(event) => handleKeyDown(event)}>
-        {/* <div tabIndex={0} className="wordle" > */}
+        <div tabIndex={0} className="wordle" onKeyDown={(event) => handleKeyDown(event.key.toString().toUpperCase())}>
             <div className="words-wrapper">
             {response.map((value, index) =>(
                 <WordleWord key={`word-${value.word}-${index}`} value = {value} index={index} />
             ))}
             <WordleWord key={`current-word`} value={{word: currentWord, correct: [], missplaced: [], fails: [0, 1, 2, 3, 4]}} index={currentWord.length-1} />
             </div>
-            <Keyboard usedLetters={new Set()} keyClickHandler={(a) => console.log(a)} ></Keyboard>
+            <Keyboard usedLetters={getCurrentLetters()} keyClickHandler={(key) => handleKeyDown(key)} ></Keyboard>
         </div>
     </>
     )
