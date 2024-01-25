@@ -48,7 +48,8 @@ class RandomWordFromDictionary:
         minutos = segundos // 60
         horas = minutos // 60
         dias = horas // 24
-        wordOfDay = self.listDictionary[minutos%60]
+        #wordOfDay = self.listDictionary[minutos%60]
+        wordOfDay = self.listDictionary[dias]
         return wordOfDay
 
 def dictionaryRaeRandomWord(file="./public/palabras_rae.txt"):
@@ -67,18 +68,3 @@ def wordleGame(data, answer):
             "wrong" : currentWordleComparison.wrongLetterIndices
         })
     return payload
-
-#def isItPluralWord(playerGuess: str):
-#    if playerGuess[-1] == "s" and playerGuess[-2] == "e":
-#        threeLetterWords = WordOfTheDay("./public/03.txt")
-#        playerGuess.pop()
-#        playerGuess.pop()
-#        if playerGuess in threeLetterWords.fileDictionary()
-#            return True
-#    elif playerGuess[-1] == "s":
-#        fourLetterWords = WordOfTheDay("./public/04.txt")
-#        playerGuess.pop()
-#        if playerGuess in fourLetterWords.fileDictionary()
-#            return True
-#    else:
-#        if playerGuess in fiveLetterWords.fileDictionary()
