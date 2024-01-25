@@ -11,6 +11,4 @@ def checkWord():
     answer = dictionaryRaeRandomWord()
     jsonData = request.get_json()
     payload = wordleGame(jsonData, answer)
-    print(answer)
-    print(payload)
     return jsonify(payload)
