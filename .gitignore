@@ -13,6 +13,9 @@ algorithm_exercises/obj
 algorithm_exercises_test_csharp/.vs
 algorithm_exercises_test_csharp/bin
 algorithm_exercises_test_csharp/obj
+games_project/backend_csharp/hangman/Hangman/obj
+games_project/backend_csharp/hangman/Hangman/bin
+games_project/backend_csharp/hangman/Hangman/.vs
 
 # JS
 node_modules

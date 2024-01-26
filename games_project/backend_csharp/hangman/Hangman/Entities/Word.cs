@@ -1,0 +1,10 @@
+﻿using MongoDB.Bson;
+
+namespace Hangman.Entities
+{
+    public class Word
+    {
+        public int Id { get; set; }
+        public string? Name { get; set; }
+    }
+}
