@@ -33,30 +33,25 @@ class RandomWordFromDictionary:
         self.listDictionary = self.__createListDictionary()
         self.wordOfDay = self.__getWordofDay()
     
-    def __createListDictionary(self):
+    def __createListDictionary(self) -> list:
         with open(self.fileName, "r", newline="\r\n", encoding="utf-8") as file:
             listDictionary = list()
             for word in file:
                 listDictionary.append(word.replace("\r\n", "").upper())
         return listDictionary
     
-    def __getWordofDay(self):
+    def __getWordofDay(self) -> str:
         startTime = 1704096000 #Enero 01 del 2024 00:00 AM
-        #checkTime = 1706083200 Enero 24 del 2024 00:00 AM
         checkTime = int(datetime.timestamp(datetime.now()))
         segundos = checkTime - startTime
-        minutos = segundos // 60
-        horas = minutos // 60
-        dias = horas // 24
-        #wordOfDay = self.listDictionary[minutos%60]
-        wordOfDay = self.listDictionary[dias]
+        wordOfDay = self.listDictionary[int(segundos/86400)]
         return wordOfDay
 
 def dictionaryRaeRandomWord(file="./public/palabras_rae.txt"):
     dictionary = RandomWordFromDictionary(file)
     return dictionary.wordOfDay
 
-def wordleGame(data, answer):
+def wordleGame(data, answer) -> list:
     payload = []
     for guess in range(len(data)):
         playerGuess = data[guess]['word']
@@ -68,3 +63,4 @@ def wordleGame(data, answer):
             "wrong" : currentWordleComparison.wrongLetterIndices
         })
     return payload
+
