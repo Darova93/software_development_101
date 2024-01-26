@@ -6,8 +6,6 @@ import { getMockResponse } from "./mockDataWordle";
 import "./styles.scss";
 import WordleWord from "./wordleWord";
 
-const _response = getMockResponse();
-
 const Wordle = () => {
     const [currentWord, setCurrentWord] = useState<string>(" ")
     const [response, setResponse] = useState<WordleResponse[]>()

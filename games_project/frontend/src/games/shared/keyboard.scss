@@ -15,7 +15,9 @@ $used-key-background: silver;
         color: black;
         margin: .1em;
         border-radius: .25em;
-
+        -webkit-user-select: none; /* Safari */
+        -ms-user-select: none; /* IE 10 and IE 11 */
+        user-select: none; /* Standard syntax */
 
         &:hover{
             cursor: pointer;
