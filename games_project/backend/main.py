@@ -10,5 +10,6 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 def checkWord():
     answer = dictionaryRaeRandomWord()
     jsonData = request.get_json()
+    print(type(jsonData))
     payload = wordleGame(jsonData, answer)
     return jsonify(payload)

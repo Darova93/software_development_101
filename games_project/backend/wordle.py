@@ -27,11 +27,11 @@ class WordleComparison:
                     self.wrongLetterIndices.append(index)
         return self.missplacedLetterIndices, self.wrongLetterIndices
 
-class RandomWordFromDictionary:
+class RandomWordPicker:
     def __init__(self, fileName):
         self.fileName = fileName
-        self.listDictionary = self.__createListDictionary()
-        self.wordOfDay = self.__getWordofDay()
+        self.wordList = self.__createListDictionary()
+        self.todaysAnswer = self.__getTodaysAnswer()
     
     def __createListDictionary(self) -> list:
         with open(self.fileName, "r", newline="\r\n", encoding="utf-8") as file:
@@ -40,21 +40,21 @@ class RandomWordFromDictionary:
                 listDictionary.append(word.replace("\r\n", "").upper())
         return listDictionary
     
-    def __getWordofDay(self) -> str:
+    def __getTodaysAnswer(self) -> str:
         startTime = 1704096000 #Enero 01 del 2024 00:00 AM
         checkTime = int(datetime.timestamp(datetime.now()))
         segundos = checkTime - startTime
-        wordOfDay = self.listDictionary[int(segundos/86400)]
-        return wordOfDay
+        todaysAnswer = self.wordList[int(segundos/86400)]
+        return todaysAnswer
 
 def dictionaryRaeRandomWord(file="./public/palabras_rae.txt"):
-    dictionary = RandomWordFromDictionary(file)
-    return dictionary.wordOfDay
+    wordList = RandomWordPicker(file)
+    return wordList.todaysAnswer
 
-def wordleGame(data, answer) -> list:
+def wordleGame(playerAttempts, answer) -> list:
     payload = []
-    for guess in range(len(data)):
-        playerGuess = data[guess]['word']
+    for round in range(len(playerAttempts)):
+        playerGuess = playerAttempts[round]['word']
         currentWordleComparison = WordleComparison(playerGuess, answer)
         payload.append ({
             "word": playerGuess,
