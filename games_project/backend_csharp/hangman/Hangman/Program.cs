@@ -1,7 +1,4 @@
-using MongoDB.Driver;
-using Microsoft.EntityFrameworkCore;
 using Hangman;
-using Hangman.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

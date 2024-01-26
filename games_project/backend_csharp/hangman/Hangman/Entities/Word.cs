@@ -1,6 +1,4 @@
-﻿using MongoDB.Bson;
-
-namespace Hangman.Entities
+﻿namespace Hangman.Entities
 {
     public class Word
     {

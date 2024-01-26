@@ -1,9 +1,6 @@
-﻿using Hangman.Controllers;
-using Hangman.Entities;
+﻿using Hangman.Entities;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using System.IO;
-using System.Numerics;
 
 namespace Hangman.Services
 {

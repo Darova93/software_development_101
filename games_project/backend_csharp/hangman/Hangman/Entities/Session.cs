@@ -1,5 +1,3 @@
-using MongoDB.Bson;
-
 namespace Hangman.Entities
 {
     public class Session
