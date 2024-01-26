@@ -100,9 +100,9 @@ const Wordle = () => {
         <div tabIndex={0} className="wordle" onKeyDown={(event) => handleKeyDown(event.key.toString().toUpperCase())}>
             <div className="words-wrapper">
             {response?.map((value, index) =>(
-                <WordleWord key={`word-${value.word}-${index}`} value = {value} index={index} />
+                <WordleWord key={`word-${value.word}-${index}`} value={value} index={index} className={index === response.length - 1 ? "newWord" : ""}/>
             ))}
-            <WordleWord key={`current-word`} value={{word: currentWord, correct: [], missplaced: [], fails: [0, 1, 2, 3, 4]}} index={currentWord.length-1} />
+            <WordleWord key={`current-word`} value={{word: currentWord, correct: [], missplaced: [], fails: [0, 1, 2, 3, 4]}} index={currentWord.length-1} className="currentWord"/>
             </div>
             <Keyboard usedLetters={getCurrentLetters() || new Set()} keyClickHandler={(key) => handleKeyDown(key)} ></Keyboard>
         </div>

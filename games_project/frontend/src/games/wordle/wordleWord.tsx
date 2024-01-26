@@ -1,7 +1,7 @@
 import { WordleResponse } from "../../types/wordleTypes"
 import WordleLetter from "./wordleLettter"
 
-const WordleWord = ({value, index} : {value: WordleResponse, index:number}) => {
+const WordleWord = ({value, index, className=""} : {value: WordleResponse, index:number, className:string}) => {
     const classes = {
         correct: "correct",
         missing: "missing",
@@ -15,7 +15,7 @@ const WordleWord = ({value, index} : {value: WordleResponse, index:number}) => {
     }
 
     return (
-        <div className="word">
+        <div className={`word ${className}`}>
             {value.word.split("").map((letter, index) => 
                 <WordleLetter key={`letter-${letter}-${index}`} letter={letter} index={index} className={getLetterClass(value, index)}/>
             )}
