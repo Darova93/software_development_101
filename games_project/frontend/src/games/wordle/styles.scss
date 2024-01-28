@@ -13,24 +13,40 @@
         display: flex;
         max-width: 25%;
         height: 3.5em;
-
-        .letter{
-            margin: .1em;
-            padding: 1em;
-            border-radius: .25em;
-            min-width: 1em;
-        }
     }
 }
 
-.missing{
+.letter{
+    margin: .1em;
+    padding: 1em;
+    border-radius: .25em;
+    min-width: 1em;
+    background-color: none;
+    border: .1em solid rgba(255, 255, 255, 0.15);
+}
+
+.past-guess{
+    .missing{
+        background-color: #caca2b;
+    }
+    
+    .correct{
+        background-color: #2bb32b;
+    }
+    
+    .fail{
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+}
+
+.missingGuessed{
     background-color: #caca2b;
 }
 
-.correct{
+.correctGuessed{
     background-color: #2bb32b;
 }
 
-.fail{
+.failGuessed{
     background-color: rgba(255, 255, 255, 0.15);
 }
