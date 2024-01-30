@@ -1,63 +1,77 @@
 from datetime import datetime
 
+#Tenemos que decidir si queremos que el archivo de las validWords y de las answers sea el mismo o no (probablemente no)
 class WordleComparison:
-    def __init__(self, playerGuess: str, correctWord: str):
+    def __init__(self, playerGuess: str, answer: str):
         self.playerGuess = playerGuess.upper()
-        self.correctWord = correctWord.upper()
-        self.answerLetterCount = {letter : self.correctWord.count(letter) for letter in set(self.correctWord)}
+        self.answer = answer.upper()
+        self.answerLetterCount = {letter : self.answer.count(letter) for letter in set(self.answer)}
         self.correctLetterIndices = self.__getCorrectLetterIndices()
         self.missplacedLetterIndices, self.wrongLetterIndices = self.__getMissplacedAndWrongLetterIndices()
     
     def __getCorrectLetterIndices(self) -> list:
         self.correctLetterIndices = []
-        for index in range(0, len(self.correctWord)):
-            if self.playerGuess[index] == self.correctWord[index]:
+        for index in range(0, len(self.answer)):
+            if self.playerGuess[index] == self.answer[index]:
                 self.correctLetterIndices.append(index)
                 self.answerLetterCount[self.playerGuess[index]] -= 1
         return self.correctLetterIndices
     def __getMissplacedAndWrongLetterIndices(self) -> tuple[list,list]:
         self.missplacedLetterIndices = []
         self.wrongLetterIndices = []
-        for index in range(0,len(self.correctWord)):
-            if self.playerGuess[index] != self.correctWord[index]:
-                if  self.playerGuess[index] in self.correctWord and self.answerLetterCount[self.playerGuess[index]] > 0:
+        for index in range(0,len(self.answer)):
+            if self.playerGuess[index] != self.answer[index]:
+                if  self.playerGuess[index] in self.answer and self.answerLetterCount[self.playerGuess[index]] > 0:
                     self.missplacedLetterIndices.append(index)
                     self.answerLetterCount[self.playerGuess[index]] -= 1
                 else:
                     self.wrongLetterIndices.append(index)
         return self.missplacedLetterIndices, self.wrongLetterIndices
 
-class RandomWordPicker:
-    def __init__(self, fileName):
-        self.fileName = fileName
-        self.wordList = self.__createListDictionary()
+class ValidWords:
+    def __init__(self):
+        raeFile = "./public/palabras_rae.txt"
+        self.fileName = raeFile
+        self.validWordsList = self.__createValidWordsList()
         self.todaysAnswer = self.__getTodaysAnswer()
     
-    def __createListDictionary(self) -> list:
+    def __createValidWordsList(self) -> list:
         with open(self.fileName, "r", newline="\r\n", encoding="utf-8") as file:
-            listDictionary = list()
+            validWords = list()
             for word in file:
-                listDictionary.append(word.replace("\r\n", "").upper())
-        return listDictionary
-    
+                validWords.append(word.replace("\r\n", "").upper())
+        return validWords
+
+#Eventualmente __getAnswer(self)
     def __getTodaysAnswer(self) -> str:
         startTime = 1704096000 #Enero 01 del 2024 00:00 AM
         checkTime = int(datetime.timestamp(datetime.now()))
         segundos = checkTime - startTime
-        todaysAnswer = self.wordList[int(segundos/86400)]
+        todaysAnswer = self.validWordsList[int(segundos/86400)]
         return todaysAnswer
 
-def dictionaryRaeRandomWord(file="./public/palabras_rae.txt"):
-    wordList = RandomWordPicker(file)
-    return wordList.todaysAnswer
+#def dictionaryRaeRandomWord(file="./public/palabras_rae.txt"):
+#    validWords = ValidWords(file)
+#    return validWords.todaysAnswer
 
-def wordleGame(playerAttempts, answer) -> list:
+#Eventualmente wordleGame() o wordleGameNumber()
+def todaysWordleGame(playerAttempts) -> list:
+    validWords = ValidWords()
+    #playersLastAttempt = playerAttempts[-1]['word']
+    #currentWordleComparison = WordleComparison(playersLastAttempt, validWords.todaysAnswer)
+    #playerAttempts[-1] = {
+    #    "word": playersLastAttempt,
+    #    "correct" : currentWordleComparison.correctLetterIndices,
+    #    "missplaced" : currentWordleComparison.missplacedLetterIndices,
+    #    "wrong" : currentWordleComparison.wrongLetterIndices
+    #}
+    #return playerAttempts
     payload = []
     for round in range(len(playerAttempts)):
-        playerGuess = playerAttempts[round]['word']
-        currentWordleComparison = WordleComparison(playerGuess, answer)
+        playersAttempt = playerAttempts[round]['word']
+        currentWordleComparison = WordleComparison(playersAttempt, validWords.todaysAnswer)
         payload.append ({
-            "word": playerGuess,
+            "word": playersAttempt,
             "correct" : currentWordleComparison.correctLetterIndices,
             "missplaced" : currentWordleComparison.missplacedLetterIndices,
             "wrong" : currentWordleComparison.wrongLetterIndices

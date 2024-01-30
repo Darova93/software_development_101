@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
-from wordle import dictionaryRaeRandomWord, wordleGame
+from wordle import ValidWords, todaysWordleGame
 
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -8,8 +8,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @app.route("/v0.1/api/wordle/checkword", methods=["POST"])
 @cross_origin()
 def checkWord():
-    answer = dictionaryRaeRandomWord()
     jsonData = request.get_json()
     print(type(jsonData))
-    payload = wordleGame(jsonData, answer)
+    payload = todaysWordleGame(jsonData)
     return jsonify(payload)
