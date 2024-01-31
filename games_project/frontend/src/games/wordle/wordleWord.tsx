@@ -5,13 +5,13 @@ const WordleWord = ({value, index, className=""} : {value: WordleResponse, index
     const classes = {
         correct: "correct",
         missing: "missing",
-        fail: "fail"
+        fails: "fails"
     }
 
     const getLetterClass = (value:WordleResponse, index:number):string => {
         if(value.correct.includes(index)) return classes.correct
         if(value.missplaced.includes(index)) return classes.missing
-        if(value.fails.includes(index)) return classes.fail
+        if(value.fails.includes(index)) return classes.fails
 
         return ""
     }

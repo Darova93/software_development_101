@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { WordleResponse } from "../../types/wordleTypes";
-import { PATH_WORDLE_API } from "../../utils/constants";
+import { PATH_WORDLE_API_DANI, PATH_WORDLE_API_KUBO } from "../../utils/constants";
 import Keyboard from "../shared/keyboard";
 import { getMockResponse } from "./mockDataWordle";
 import "./styles.scss";
@@ -20,13 +20,13 @@ const Wordle = () => {
         if(guess) {
             Array.from(guess.getElementsByClassName('letter'))?.forEach((element, index) => {
                 setTimeout(() => {
-                    element.animate({transform: ['rotateX(0)', 'rotateX(90deg)']}, {duration: 250, iterations: 1, easing: "ease-in-out"}).addEventListener('finish', () => {
+                    element.animate({transform: ['rotateX(0)', 'rotateX(90deg)']}, {duration: 250, iterations: 1, easing: "ease-in"}).addEventListener('finish', () => {
                         if(element.classList.contains('correct')) element.classList.add("correctGuessed");
                         if(element.classList.contains('missing')) element.classList.add("missingGuessed");
-                        if(element.classList.contains('fail')) element.classList.add("failGuessed");
-                        element.animate({transform: ['rotateX(90deg)', 'rotateX(0)']}, {duration: 250, iterations: 1, easing: "ease-in-out"})
+                        if(element.classList.contains('fails')) element.classList.add("failGuessed");
+                        element.animate({transform: ['rotateX(90deg)', 'rotateX(0)']}, {duration: 250, iterations: 1, easing: "ease-out"})
                     });
-                }, (index * 1000 / 2));
+                }, (index * 500 / 2));
             })
         }
     }
@@ -72,9 +72,9 @@ const Wordle = () => {
             return;
         }
         try{
-            const serverResponse = await wordRequest(PATH_WORDLE_API, createPayload());
+            const serverResponse = await wordRequest(PATH_WORDLE_API_DANI, createPayload());
             const processedResponse = processResponse(serverResponse);
-            if(processResponse.length === 5 && processedResponse[processedResponse.length - 1].correct.length === 5) endGame();
+            if(processResponse.length <= 5 && processedResponse[processedResponse.length - 1].correct.length === 5) {endGame();}
             setCurrentWord(" ");
             setResponse(processedResponse);
         }
@@ -88,7 +88,7 @@ const Wordle = () => {
             transform: ["translate(-5%)", "translateX(5%)", "translateX(-10%)", "translateX(10%)", "translateX(-5%)", "translateX(0)"],
             offset: [.1, .3, .5, .7, .9, 1]
       }, {
-        duration: 100,
+        duration: 150,
         iterations: 1,
         easing: "ease-in-out"
       });
@@ -96,6 +96,7 @@ const Wordle = () => {
 
     const endGame = () => {
         setCurrentWord('')
+        alert()
     }
 
     const processResponse = (serverResponse: any) => {
@@ -106,7 +107,7 @@ const Wordle = () => {
                 word: element.word || "",
                 correct: element.correct || [],
                 missplaced: element.missplaced || [],
-                fails: element.failed || []
+                fails: element.fails || []
             });
         });
 

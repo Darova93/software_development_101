@@ -1,4 +1,5 @@
 import './App.css';
+import GoogleLogin from './components/GoogleLogin';
 import Wordle from './games/wordle/wordle';
 import './styles/global.css';
 
