@@ -11,3 +11,6 @@ def checkWord():
     jsonData = request.get_json()
     playerAttemts = todaysWordleGame(jsonData)
     return jsonify(playerAttemts)
+
+if __name__ == "__main__":
+    app.run(debug=True)
