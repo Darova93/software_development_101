@@ -1,6 +1,6 @@
-import { WordleResponse } from "../../types/wordleTypes"
+import { WordData } from "../../types/wordleTypes"
 
-export const getMockResponse = (): WordleResponse[] => {
+export const getMockResponse = (): WordData[] => {
     return [
         // {word: "HOTEL", missplaced: [4], fails: [0, 1, 2], correct: [3]},
         // {word: "MOTEL", missplaced: [4], fails: [0, 1, 2], correct: [3]},
