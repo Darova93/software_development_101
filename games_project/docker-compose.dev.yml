@@ -1,0 +1,55 @@
+services:
+  proxy:
+    image: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
+    depends_on:
+      - python_backend
+      - react_frontend
+      - csharp_backend
+    networks:
+      - backnet
+
+  python_backend:
+    container_name: python_backend
+    build: ./backend
+    stop_signal: SIGINT
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend:/src
+    networks:
+      - backnet
+
+  react_frontend:
+    container_name: react_frontend
+    build:
+      context: ./frontend
+      target: development
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend/src:/code/src
+      - /project/node_modules
+    networks:
+      - backnet
+    depends_on:
+      - python_backend
+      - csharp_backend
+    expose:
+      - 3306
+      - 33060
+
+  csharp_backend:
+    container_name: csharp_backend
+    build:
+      context: ./backend_csharp/hangman/Hangman
+    ports:
+      - 7143:80
+    networks:
+      - backnet
+
+networks:
+  backnet:
