@@ -69,7 +69,7 @@ def todaysWordleGame(playerAttempts) -> list:
     validWords = ValidWords()
     payload = []
     for round in range(len(playerAttempts)):
-        playersAttempt = playerAttempts[round]['word']
+        playersAttempt = playerAttempts[round]
         currentWordleComparison = WordleComparison(playersAttempt, validWords.todaysAnswer)
         payload.append ({
             "word": playersAttempt,
