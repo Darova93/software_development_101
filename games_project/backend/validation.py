@@ -5,7 +5,7 @@ def validateRequest(jsonData: list):
         try:
             if len(jsonData[attempt]["word"]) != 5:
                 return None
-        except TypeError:
+        except:
             return None
     return jsonData
 
@@ -18,7 +18,7 @@ def checkDictionaryListWords(jsonData: list):
         words.append(jsonData[attempt]["word"].upper())
     return words
 
-def checkSpecialCaractersInValidWords(words):
+def checkSpecialCaractersInValidWords(words: list):
     validWords = ValidWords()
     specialLetters = ["Á", "É", "Í", "Ó", "Ú", "Ñ", "Ü"]
     normalLetters = ["A", "E", "I", "O", "U", "N", "U"]
@@ -27,8 +27,8 @@ def checkSpecialCaractersInValidWords(words):
         roundWord.upper()
         newRoundWord = list()
         for letter in range(len(specialLetters)):
-            if specialLetters[letter] in validWords.todaysAnswer:
-                indexAnswer = validWords.todaysAnswer.find(specialLetters[letter])
+            if specialLetters[letter] in validWords.todaysAnswerNoAccentMark:
+                indexAnswer = validWords.todaysAnswerNoAccentMark.find(specialLetters[letter])
                 if normalLetters[letter] == roundWord[indexAnswer]:
                     newRoundWord = list(roundWord)
                     newRoundWord[indexAnswer] = specialLetters[letter]

@@ -52,6 +52,7 @@ class ValidWords:
         self.fileName = raeFile
         self.validWordsList = self.__createValidWordsList()
         self.todaysAnswer = self.__getTodaysAnswer()
+        self.todaysAnswerNoAccentMark = self.__removeAccentMark()
     
     def __createValidWordsList(self) -> list:
         with open(self.fileName, "r", newline="\r\n", encoding="utf-8") as file:
@@ -64,13 +65,27 @@ class ValidWords:
         startingDate = StartingDate(2024,1,1)
         todaysAnswer = self.validWordsList[getDaysSinceStartingDate(startingDate.timestamp)]
         return todaysAnswer
+    
+    def __removeAccentMark(self):
+        word = self.todaysAnswer
+        specialLetters = ["Á", "É", "Í", "Ó", "Ú", "Ñ", "Ü"]    
+        normalLetters = ["A", "E", "I", "O", "U", "N", "U"]
+        for letter in range(len(specialLetters)):
+            if specialLetters[letter] in word:
+                indexLetter = word.find(specialLetters[letter])
+                newTodaysAnswer = list(word)
+                newTodaysAnswer[indexLetter] = normalLetters[letter]
+                newTodaysAnswer = "".join(newTodaysAnswer)
+        return newTodaysAnswer
+
+
 
 def todaysWordleGame(playerAttempts) -> list:
     validWords = ValidWords()
     payload = []
     for round in range(len(playerAttempts)):
         playersAttempt = playerAttempts[round]
-        currentWordleComparison = WordleComparison(playersAttempt, validWords.todaysAnswer)
+        currentWordleComparison = WordleComparison(playersAttempt, validWords.todaysAnswerNoAccentMark)
         payload.append ({
             "word": playersAttempt,
             "correct" : currentWordleComparison.correctLetterIndices,
