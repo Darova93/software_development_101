@@ -1,23 +1,35 @@
 from wordle import ValidWords
 
-def validateRequest(wordleRequest):
+def isStatusValid(gameStatus):
+    if gameStatus == "NEW" or gameStatus == "CONTINUE":
+        return True
+    return False
+
+def isTheLastAttemptValid(lastAttempt):
+    if not isinstance(lastAttempt,str):
+        return False
+    if not lastAttempt.isalpha():
+        return False
+    if not len(lastAttempt)==5:
+        return False
+    if not isAttemptInTheList(lastAttempt):
+        return False
+    return True
+
+def isLastAttemptAFiveLetterWord(wordleRequest):
     for turn in range(len(wordleRequest["words"])):
         word = wordleRequest["words"][turn]["word"]
-        try:
-            if len(word) != 5:
-                return None
-        except:
-            return None
-    return wordleRequest
+        if len(word) != 5:
+            return False
+    return True
 
-def checkDictionaryListWords(wordleRequest):
+def isAttemptInTheList(attempt):
     validWords = ValidWords()
     playerWords = []
-    for turn in range(len(wordleRequest["words"])):
-        if (wordleRequest["words"][turn]["word"]).upper() not in validWords.validWordsList:
+    for turn in range(len(attempt["words"])):
+        if (attempt["words"][turn]["word"]).upper() not in validWords.validWordsList:
             return None
-        #playerWords.append(wordleRequest["words"][turn]["word"].upper())
-    return wordleRequest
+    return attempt
 
 def checkSpecialCaractersInValidWords(words):
     validWords = ValidWords()
@@ -39,3 +51,5 @@ def checkSpecialCaractersInValidWords(words):
         else:
             newWords.append(roundWord)
     return newWords
+
+def isValid(wordleRequest):

@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 from wordle import todaysWordleGame
-from validation import validateRequest, checkDictionaryListWords, checkSpecialCaractersInValidWords
+from validation import isLastAttemptAFiveLetterWord, isAttemptInTheList, checkSpecialCaractersInValidWords
 
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -10,11 +10,11 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @cross_origin()
 def checkWord():
     wordleRequest = request.get_json()
-    isValid = validateRequest(wordleRequest)
+    isValid = isLastAttemptAFiveLetterWord(wordleRequest)
     
     if not isValid:
         return wordleRequest
-    checkingRealWords = checkDictionaryListWords(isValid)
+    checkingRealWords = isAttemptInTheList(isValid)
     if not checkingRealWords:
         return wordleRequest
     
