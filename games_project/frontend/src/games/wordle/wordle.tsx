@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { WordleResponse } from "../../types/wordleTypes";
-import { PATH_WORDLE_API } from "../../utils/constants";
+import { GameState, Status, WordData } from "../../types/wordleTypes";
+import { PATH_WORDLE_API_DANI, PATH_WORDLE_API_KUBO } from "../../utils/constants";
 import Keyboard from "../shared/keyboard";
 import { getMockResponse } from "./mockDataWordle";
 import "./styles.scss";
@@ -8,25 +8,26 @@ import WordleWord from "./wordleWord";
 
 const Wordle = () => {
     const [currentWord, setCurrentWord] = useState<string>(" ")
-    const [response, setResponse] = useState<WordleResponse[]>()
+    const [gameState, setGameState] = useState<GameState>();
+    const [wordList, setWordList] = useState<WordData[]>();
 
     useEffect(() => {
         const lastGuess = document.getElementsByClassName('last-guess')[0];
         guessAnimation(lastGuess);
         
-    }, [response])
+    }, [wordList])
 
     const guessAnimation = (guess:Element) =>{
         if(guess) {
             Array.from(guess.getElementsByClassName('letter'))?.forEach((element, index) => {
                 setTimeout(() => {
-                    element.animate({transform: ['rotateX(0)', 'rotateX(90deg)']}, {duration: 250, iterations: 1, easing: "ease-in-out"}).addEventListener('finish', () => {
+                    element.animate({transform: ['rotateX(0)', 'rotateX(90deg)']}, {duration: 250, iterations: 1, easing: "ease-in"}).addEventListener('finish', () => {
                         if(element.classList.contains('correct')) element.classList.add("correctGuessed");
                         if(element.classList.contains('missing')) element.classList.add("missingGuessed");
-                        if(element.classList.contains('fail')) element.classList.add("failGuessed");
-                        element.animate({transform: ['rotateX(90deg)', 'rotateX(0)']}, {duration: 250, iterations: 1, easing: "ease-in-out"})
+                        if(element.classList.contains('fails')) element.classList.add("failGuessed");
+                        element.animate({transform: ['rotateX(90deg)', 'rotateX(0)']}, {duration: 250, iterations: 1, easing: "ease-out"})
                     });
-                }, (index * 1000 / 2));
+                }, (index * 500 / 2));
             })
         }
     }
@@ -50,15 +51,21 @@ const Wordle = () => {
         setCurrentWord(word);
     }
 
-    const createPayload = () => {
-        let payload: {word: string}[] = [];
-        if(response){
-            response.forEach(element => {
-                payload.push({word: element.word})
-            });           
-        }
-        payload.push({word: currentWord})
+    const createPayload = () : GameState => {
+        let wordsPlaying: WordData[] = wordList ? wordList : [];
         
+        wordsPlaying.push({
+            word: currentWord,
+            correct: [],
+            missplaced: [],
+            fails: []
+        })
+        
+        let payload = {
+            status: gameState?.status || Status.NEW,
+            words: wordsPlaying,
+        }
+
         return payload
     }
 
@@ -72,11 +79,8 @@ const Wordle = () => {
             return;
         }
         try{
-            const serverResponse = await wordRequest(PATH_WORDLE_API, createPayload());
-            const processedResponse = processResponse(serverResponse);
-            if(processResponse.length === 5 && processedResponse[processedResponse.length - 1].correct.length === 5) endGame();
-            setCurrentWord(" ");
-            setResponse(processedResponse);
+            const serverResponse = await wordRequest(PATH_WORDLE_API_DANI, createPayload());
+            processResponse(serverResponse);
         }
         catch(e){
             console.log(e);
@@ -88,7 +92,7 @@ const Wordle = () => {
             transform: ["translate(-5%)", "translateX(5%)", "translateX(-10%)", "translateX(10%)", "translateX(-5%)", "translateX(0)"],
             offset: [.1, .3, .5, .7, .9, 1]
       }, {
-        duration: 100,
+        duration: 150,
         iterations: 1,
         easing: "ease-in-out"
       });
@@ -96,24 +100,18 @@ const Wordle = () => {
 
     const endGame = () => {
         setCurrentWord('')
+        alert()
     }
 
-    const processResponse = (serverResponse: any) => {
-        let processedResponse: WordleResponse[] = [];
-    
-        serverResponse.forEach((element: any) => {
-            processedResponse.push({
-                word: element.word || "",
-                correct: element.correct || [],
-                missplaced: element.missplaced || [],
-                fails: element.failed || []
-            });
-        });
-
-        return (processedResponse);
+    const processResponse = (serverResponse: GameState) => {
+        if(serverResponse.status === Status.WIN) endGame();
+        if(serverResponse.status === Status.LOSS) endGame();
+        setGameState(serverResponse);
+        setWordList(serverResponse.words);
+        setCurrentWord(" ");
     }
 
-    const wordRequest = async (url: any, data: any) => {
+    const wordRequest = async (url: string, data: GameState) => {
         try {
             const response = await fetch(url, {
                 method: 'POST',
@@ -135,7 +133,7 @@ const Wordle = () => {
     };
     
     const getCurrentLetters = () => {
-        return response?.reduce((usedLetters:Set<string>, value:WordleResponse):Set<string> => {
+        return wordList?.reduce((usedLetters:Set<string>, value:WordData):Set<string> => {
             [...value.word].forEach(char => {
                 usedLetters.add(char)
             })
@@ -147,8 +145,8 @@ const Wordle = () => {
     <> 
         <div tabIndex={0} className="wordle" onKeyDown={(event) => handleKeyDown(event.key.toString().toUpperCase())}>
             <div className="words-wrapper">
-            {response?.map((value, index) =>(
-                <WordleWord key={`word-${value.word}-${index}`} value={value} index={index} className={index === response.length - 1 ? "last-guess" : "past-guess"}/>
+            {wordList?.map((value, index) =>(
+                <WordleWord key={`word-${value.word}-${index}`} value={value} index={index} className={index === wordList.length - 1 ? "last-guess" : "past-guess"}/>
             ))}
             <WordleWord key={`current-word`} value={{word: currentWord, correct: [], missplaced: [], fails: []}} index={currentWord.length-1} className="current-word"/>
             </div>

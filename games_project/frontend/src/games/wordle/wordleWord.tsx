@@ -1,17 +1,17 @@
-import { WordleResponse } from "../../types/wordleTypes"
+import { WordData } from "../../types/wordleTypes"
 import WordleLetter from "./wordleLettter"
 
-const WordleWord = ({value, index, className=""} : {value: WordleResponse, index:number, className:string}) => {
+const WordleWord = ({value, index, className=""} : {value: WordData, index:number, className:string}) => {
     const classes = {
         correct: "correct",
         missing: "missing",
-        fail: "fail"
+        fails: "fails"
     }
 
-    const getLetterClass = (value:WordleResponse, index:number):string => {
+    const getLetterClass = (value:WordData, index:number):string => {
         if(value.correct.includes(index)) return classes.correct
         if(value.missplaced.includes(index)) return classes.missing
-        if(value.fails.includes(index)) return classes.fail
+        if(value.fails.includes(index)) return classes.fails
 
         return ""
     }
