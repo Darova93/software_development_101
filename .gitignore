@@ -13,10 +13,12 @@ algorithm_exercises/obj
 algorithm_exercises_test_csharp/.vs
 algorithm_exercises_test_csharp/bin
 algorithm_exercises_test_csharp/obj
+games_project/backend_csharp/hangman/Hangman/obj
+games_project/backend_csharp/hangman/Hangman/bin
+games_project/backend_csharp/hangman/Hangman/.vs
+games_project/backend_csharp/hangman/Hangman/*.user
 
 # JS
 node_modules
-package.json
-package-lock.json
 lib
 spec

@@ -1,0 +1,26 @@
+{
+  "name": "software_development_101",
+  "version": "1.0.0",
+  "description": "software dev 101",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "jasmine --config=jasmine.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Darova93/software_development_101.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Darova93/software_development_101/issues"
+  },
+  "homepage": "https://github.com/Darova93/software_development_101#readme",
+  "devDependencies": {
+    "jasmine": "^5.1.0"
+  },
+  "dependencies": {
+    "npm": "^10.3.0"
+  }
+}
