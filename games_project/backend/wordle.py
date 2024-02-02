@@ -77,8 +77,7 @@ def getGameStatus(playerAttempts):
         return GameStatus.WIN
     elif len(playerAttempts) < 6:
         return GameStatus.CONTINUE
-    else:
-        return GameStatus.LOSS
+    return GameStatus.LOSS
 
 
 def todaysWordleGame(playerAttempts):
