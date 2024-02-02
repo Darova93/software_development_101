@@ -1,4 +1,5 @@
 from datetime import datetime
+from enum import Enum
 
 class WordleComparison:
     def __init__(self, attempt: str, answer: str):
@@ -65,16 +66,30 @@ class ValidWords:
         todaysAnswer = self.validWordsList[getDaysSinceStartingDate(startingDate.timestamp)]
         return todaysAnswer
 
-def todaysWordleGame(playerAttempts) -> list:
+class GameStatus(Enum):
+    CONTINUE = "CONTINUE"
+    NEW = "NEW"
+    WIN = "WIN"
+    LOSS = "LOSS"
+
+def getGameStatus(playerAttempts):
+    if len(playerAttempts[-1]["correct"]) == 5:
+        return GameStatus.WIN
+    elif len(playerAttempts) < 6:
+        return GameStatus.CONTINUE
+    return GameStatus.LOSS
+
+
+def todaysWordleGame(playerAttempts):
     validWords = ValidWords()
     payload = []
-    for round in range(len(playerAttempts)):
-        playersAttempt = playerAttempts[round]['word']
+    for round in range(len(playerAttempts["words"])):
+        playersAttempt = playerAttempts["words"][round]['word']
         currentWordleComparison = WordleComparison(playersAttempt, validWords.todaysAnswer)
-        payload.append ({
-            "word": playersAttempt,
+        playerAttempts["words"][round] = {"word": playersAttempt,
             "correct" : currentWordleComparison.correctLetterIndices,
             "missplaced" : currentWordleComparison.missplacedLetterIndices,
             "fails" : currentWordleComparison.wrongLetterIndices
-        })
-    return payload
+            }
+    playerAttempts["status"] = getGameStatus(playerAttempts["words"])
+    return playerAttempts
