@@ -1,4 +1,5 @@
 from datetime import datetime
+from enum import Enum
 
 class WordleComparison:
     def __init__(self, attempt: str, answer: str):
@@ -65,7 +66,7 @@ class ValidWords:
         todaysAnswer = self.validWordsList[getDaysSinceStartingDate(startingDate.timestamp)]
         return todaysAnswer
 
-class GameStatus(enumerate):
+class GameStatus(Enum):
     CONTINUE = "CONTINUE"
     NEW = "NEW"
     WIN = "WIN"
