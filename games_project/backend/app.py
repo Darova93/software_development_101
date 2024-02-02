@@ -13,10 +13,11 @@ def checkWord():
     isValid = validateRequest(wordleRequest)
     
     if not isValid:
-        return "Solo se aceptan palabras de 5 letras"
+        return wordleRequest
     checkingRealWords = checkDictionaryListWords(isValid)
     if not checkingRealWords:
-        return "Solo se aceptan palabras existentes"
+        return wordleRequest
+    
     playerAttemts = todaysWordleGame(checkingRealWords)
     
     return jsonify(playerAttemts)

@@ -78,7 +78,7 @@ class ValidWords:
                 todaysAnswerWithoutAccentMark = "".join(todaysAnswerWithoutAccentMark)
         return todaysAnswerWithoutAccentMark
 
-class GameStatus(enumerate):
+class GameStatus(str, Enum):
     CONTINUE = "CONTINUE"
     NEW = "NEW"
     WIN = "WIN"
@@ -105,7 +105,6 @@ class GameStatus(enumerate):
 #lastTurnWordleResponse = WordleResponse()
 
 def getGameStatus(playerAttempts):
-    #gameStatus = GameStatus()
     if len(playerAttempts[-1]["correct"]) == 5:
         return GameStatus.WIN
     elif len(playerAttempts) < 6:
