@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { GameState, Status, WordData } from "../../types/wordleTypes";
-import { PATH_WORDLE_API_DANI, PATH_WORDLE_API_KUBO } from "../../utils/constants";
+import { LOCALHOST, PATH_WORDLE_API_DANI, PATH_WORDLE_API_KUBO } from "../../utils/constants";
 import Keyboard from "../shared/keyboard";
 import { getMockResponse } from "./mockDataWordle";
 import "./styles.scss";
@@ -79,7 +79,7 @@ const Wordle = () => {
             return;
         }
         try{
-            const serverResponse = await wordRequest(PATH_WORDLE_API_DANI, createPayload());
+            const serverResponse = await wordRequest(LOCALHOST, createPayload());
             processResponse(serverResponse);
         }
         catch(e){
