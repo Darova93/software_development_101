@@ -15,8 +15,8 @@ export type GameState = {
 }
 
 export enum Status {
-    CONTINUE,
-    NEW,
-    WIN,
-    LOSS
+    CONTINUE = "CONTINUE",
+    NEW = "NEW",
+    WIN = "WIN",
+    LOSS = "LOSS"
 }
