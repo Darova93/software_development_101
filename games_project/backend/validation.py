@@ -1,24 +1,25 @@
 from wordle import ValidWords
 
-def validateRequest(jsonData: list):
-    for attempt in range(len(jsonData)):
+def validateRequest(wordleRequest):
+    for turn in range(len(wordleRequest["words"])):
+        word = wordleRequest["words"][turn]["word"]
         try:
-            if len(jsonData[attempt]["word"]) != 5:
+            if len(word) != 5:
                 return None
         except:
             return None
-    return jsonData
+    return wordleRequest
 
-def checkDictionaryListWords(jsonData: list):
+def checkDictionaryListWords(wordleRequest):
     validWords = ValidWords()
-    words = []
-    for attempt in range(len(jsonData)):
-        if (jsonData[attempt]["word"]).upper() not in validWords.validWordsList:
+    playerWords = []
+    for turn in range(len(wordleRequest["words"])):
+        if (wordleRequest["words"][turn]["word"]).upper() not in validWords.validWordsList:
             return None
-        words.append(jsonData[attempt]["word"].upper())
-    return words
+        #playerWords.append(wordleRequest["words"][turn]["word"].upper())
+    return wordleRequest
 
-def checkSpecialCaractersInValidWords(words: list):
+def checkSpecialCaractersInValidWords(words):
     validWords = ValidWords()
     specialLetters = ["Á", "É", "Í", "Ó", "Ú", "Ñ", "Ü"]
     normalLetters = ["A", "E", "I", "O", "U", "N", "U"]
