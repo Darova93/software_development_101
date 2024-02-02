@@ -53,6 +53,7 @@ class ValidWords:
         self.fileName = raeFile
         self.validWordsList = self.__createValidWordsList()
         self.todaysAnswer = self.__getTodaysAnswer()
+        self.todaysAnswerNoAccentMark = self.__removeAccentMark()
     
     def __createValidWordsList(self) -> list:
         with open(self.fileName, "r", newline="\r\n", encoding="utf-8") as file:
@@ -65,12 +66,43 @@ class ValidWords:
         startingDate = StartingDate(2024,1,1)
         todaysAnswer = self.validWordsList[getDaysSinceStartingDate(startingDate.timestamp)]
         return todaysAnswer
+    
+    def __removeAccentMark(self):
+        specialLetters = ["Á", "É", "Í", "Ó", "Ú", "Ü"]    
+        normalLetters = ["A", "E", "I", "O", "U", "U"]
+        for letter in range(len(specialLetters)):
+            if specialLetters[letter] in self.todaysAnswer:
+                indexLetter = self.todaysAnswer.find(specialLetters[letter])
+                todaysAnswerWithoutAccentMark = list(self.todaysAnswer)
+                todaysAnswerWithoutAccentMark[indexLetter] = normalLetters[letter]
+                todaysAnswerWithoutAccentMark = "".join(todaysAnswerWithoutAccentMark)
+        return todaysAnswerWithoutAccentMark
 
-class GameStatus(Enum):
+class GameStatus(str, Enum):
     CONTINUE = "CONTINUE"
     NEW = "NEW"
     WIN = "WIN"
     LOSS = "LOSS"
+
+#class WordleResponseTurn():
+#    word = None
+#    correct = None
+#    missplaced = None
+#    fails = None
+#    def __init__(self, word, correct, missplaced, fails):
+#        self.word = word
+#        self.correct = correct
+#        self.missplaced = missplaced
+#        self.fails = fails
+
+#class WordleResponse():
+#    gameStatus = None
+#    turns = None
+#    def __init__(self, gameStatus: GameStatus, turns: list[WordleResponseTurn]) -> None:
+#        self.gameStatus = gameStatus 
+#        self.turns = turns
+
+#lastTurnWordleResponse = WordleResponse()
 
 def getGameStatus(playerAttempts):
     if len(playerAttempts[-1]["correct"]) == 5:
@@ -79,13 +111,11 @@ def getGameStatus(playerAttempts):
         return GameStatus.CONTINUE
     return GameStatus.LOSS
 
-
 def todaysWordleGame(playerAttempts):
     validWords = ValidWords()
-    payload = []
     for round in range(len(playerAttempts["words"])):
         playersAttempt = playerAttempts["words"][round]['word']
-        currentWordleComparison = WordleComparison(playersAttempt, validWords.todaysAnswer)
+        currentWordleComparison = WordleComparison(playersAttempt, validWords.todaysAnswerNoAccentMark)
         playerAttempts["words"][round] = {"word": playersAttempt,
             "correct" : currentWordleComparison.correctLetterIndices,
             "missplaced" : currentWordleComparison.missplacedLetterIndices,

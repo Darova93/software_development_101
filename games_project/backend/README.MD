@@ -22,9 +22,9 @@ source .venv/Scripts/activate
 Then run
 ## Linux
 ```bash
-flask --app main run --debug
+flask --app app run --debug
 ```
 ## Windows
 ```bash
-python3 -m flask --app main run --debug --host=0.0.0.0
+python3 -m flask --app app run --debug --host=0.0.0.0
 ```
