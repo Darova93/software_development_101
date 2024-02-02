@@ -14,12 +14,14 @@ services:
 
   python_backend:
     container_name: python_backend
-    build: ./backend
+    build:
+      context: ./backend
+      target: dev-envs
     stop_signal: SIGINT
     ports:
       - 8000:8000
     volumes:
-      - ./backend:/src
+      - ./backend:/code
     networks:
       - backnet
 
@@ -51,5 +53,19 @@ services:
     networks:
       - backnet
 
+  db:
+    container_name: db
+    image: mysql
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: tres_con_todo
+    networks:
+      - backnet
+
 networks:
   backnet:
+
+volumes:
+  db-data:
