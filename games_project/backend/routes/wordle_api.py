@@ -3,7 +3,7 @@ from typing import cast
 from flask import Blueprint, jsonify, request
 from flask_cors import cross_origin
 from marshmallow import Schema, ValidationError
-from marshmallow.fields import String, Nested, List
+from marshmallow.fields import String, Nested, List, Integer
 from marshmallow.validate import Length, Regexp
 
 from games.wordle.wordle import Wordle, WordleTurn, GameStatus
@@ -15,6 +15,9 @@ app_route = Blueprint('wordle', __name__, url_prefix="/v0.1/wordle")
 
 class WordleCheckWordRequestWord(Schema):
     word = String(required=True, validate=[Regexp("^[a-zA-Z]{5}$")])
+    correct = List(Integer(), required=True)
+    fails = List(Integer(), required=True)
+    missplaced = List(Integer(), required=True)
 
 class WordleCheckWordRequest(Schema):
     status = String(required=True, validate=Length(max=100))
