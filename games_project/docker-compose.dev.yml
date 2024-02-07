@@ -61,6 +61,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: tres_con_todo
+    ports:
+      - 3306:3306
     networks:
       - backnet
 

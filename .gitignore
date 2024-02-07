@@ -1,6 +1,7 @@
 # VSCode
 *.vs
 *.vscode
+.env
 
 # Python
 .pytest_cache
