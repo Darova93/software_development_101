@@ -21,7 +21,7 @@ class WordleCheckWordRequestWord(Schema):
 
 class WordleCheckWordRequest(Schema):
     status = String(required=True, validate=Length(max=100))
-    words = List(Nested(WordleCheckWordRequestWord(), required=True))
+    turns = List(Nested(WordleCheckWordRequestWord(), required=True))
 
 @dataclass
 class WordleCheckWordResponseTurn:
@@ -51,7 +51,7 @@ def check_word():
     try:
         check_word_request = cast(dict, WordleCheckWordRequest().load(request.get_json()))
         wordle = Wordle(FileWordPicker())
-        for word_attempt in check_word_request["words"]:
+        for word_attempt in check_word_request["turns"]:
             wordle.guess(word_attempt["word"])
         wordle_response = WordleCheckWordResponse(wordle)
         return jsonify(wordle_response)
