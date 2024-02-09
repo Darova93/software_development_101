@@ -21,7 +21,7 @@ class WordleCheckWordRequestWord(Schema):
 
 class WordleCheckWordRequest(Schema):
     status = String(required=True, validate=Length(max=100))
-    turns = List(Nested(WordleCheckWordRequestWord(), required=True))
+    words = List(Nested(WordleCheckWordRequestWord(), required=True))
 
 @dataclass
 class WordleCheckWordResponseTurn:
@@ -39,11 +39,11 @@ class WordleCheckWordResponseTurn:
 @dataclass
 class WordleCheckWordResponse:
     status: GameStatus
-    turns: list[WordleCheckWordResponseTurn]
+    words: list[WordleCheckWordResponseTurn]
 
     def __init__(self, wordle: Wordle):
         self.status = wordle.get_game_status()
-        self.turns = [WordleCheckWordResponseTurn(turn) for turn in wordle.turns]
+        self.words = [WordleCheckWordResponseTurn(turn) for turn in wordle.turns]
 
 @app_route.route("/checkword", methods=["POST"])
 @cross_origin()
@@ -51,7 +51,7 @@ def check_word():
     try:
         check_word_request = cast(dict, WordleCheckWordRequest().load(request.get_json()))
         wordle = Wordle(FileWordPicker())
-        for word_attempt in check_word_request["turns"]:
+        for word_attempt in check_word_request["words"]:
             wordle.guess(word_attempt["word"])
         wordle_response = WordleCheckWordResponse(wordle)
         return jsonify(wordle_response)
